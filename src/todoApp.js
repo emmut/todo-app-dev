@@ -3,13 +3,34 @@ const todoInput = document.getElementById('todoInput');
 const deleteBtn = document.querySelectorAll('.delete');
 const todo = document.getElementById('todoUl');
 
+window.onload = retrieveTodo();
 
-// render todo
-todoArr.forEach((element, index) => {
-    // runs the add todo-function
-    addToDo(todoArr[index].title);
+function retrieveTodo() {
+    temp = JSON.parse(window.localStorage.getItem('todo'));
+
+    if(!temp) return
+
+    temp.forEach(element => {
+        todoArr.push({
+            //id: todoId,
+            title: element.title,
+            due: null,
+            created: null,
+            complete: false,
+        })
+    });
+
+    console.log(todoArr);
     
-});
+    // render todo
+    todoArr.forEach((element, index) => {
+    
+        // runs the add todo-function
+        addToDo(todoArr[index].title);
+        
+    });
+}
+
 
 // add todo
 form.addEventListener('submit', (e) => {
@@ -23,6 +44,9 @@ form.addEventListener('submit', (e) => {
     
     // adds todo to screen
     addToDo(todoVal);
+
+    // save to local storeage
+    saveToLocal(todoVal);
     
     // reset input
     document.getElementById('todoInput').value = "";
@@ -61,16 +85,7 @@ function addToDo(data) {
     todo.appendChild(box).appendChild(listItem);
     listItem.innerHTML = data; 
     listItem.appendChild(deleteBtnLink);
-    
-    //TODO: lägg till due och skapelsedatum
-    todoArr.push({
-        id: todoId,
-        title: data,
-        due: null,
-        created: null,
-    });
 
-    window.localStorage.setItem('todo', JSON.stringify(todoArr));
 }
 function removeTodo(data, target) {
     
@@ -88,7 +103,19 @@ function removeTodo(data, target) {
     todoArr.slice(toRemove, 1);
     
     console.log(todoArr);
-    
-    
-    
+        
+}
+
+function saveToLocal(data) {
+    //TODO: lägg till due och skapelsedatum
+    // add data to temporary object
+    todoArr.push({
+        //id: todoId,
+        title: data,
+        due: null,
+        created: null,
+        complete: false,
+    });
+
+    window.localStorage.setItem('todo', JSON.stringify(todoArr));
 }
