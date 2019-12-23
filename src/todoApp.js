@@ -50,12 +50,10 @@ function retrieveTodo() {
 }
 
 function renderTodo() {
- 
-    let temp = [];
-    
-    temp = retrieveTodo(); 
-    
-    if(!temp) return;
+
+    if(!window.localStorage) window.localStorage.setItem('todo', JSON.stringify([{}]));
+
+    let temp = retrieveTodo(); 
 
     // render todo
     temp.forEach((el) => {
@@ -163,18 +161,35 @@ function doComplete(e) {
     target.classList.toggle('completed');
 
     //  get id of current listitem
-    let thisID = target.children[0].dataset.id;
+    let thisID = Number(target.children[0].dataset.id);
     
     // get localstorage array and filter out the correct listitem
-    // let temp = retrieveTodo();
-    // let updatedTodo = temp.forEach((el) => {
-    //     if(el.id == thisID && el.completed) {
-    //         el.completed = false;
-    //     } else if(el.id == thisID && !el.completed) {
-    //         el.completed = true;      
-    //     }
-    // });
-    // console.log(updateTodo);
+    let temp = retrieveTodo();
+    console.log(temp);
+    
+    let updatedTodo = temp.forEach((el, index, array) => {
+        if (index !== thisID) return;
+
+        console.log(thisID);
+        console.log(el.completed);
+        el.completed = true;
+        console.log(el.completed);
+        console.log(array);
+        
+        
+        // if(el.id === thisID && el.completed) {
+        //     console.log('is true');
+            
+        //     el.completed = false;
+        //     return temp;
+        // } else if(el.id === thisID && !el.completed) {
+        //     console.log('is false');
+            
+        //     el.completed = true;      
+        //     return temp;
+        // }
+    });
+    console.log(updatedTodo);
     
     // window.localStorage.setItem('todo', JSON.stringify(updatedTodo));
     
