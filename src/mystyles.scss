@@ -34,3 +34,14 @@ $input-shadow: none;
 @import "../node_modules/bulma/sass/components/navbar.sass";
 @import "../node_modules/bulma/sass/layout/hero.sass";
 @import "../node_modules/bulma/sass/layout/section.sass";
+
+#todoUl {
+    .box {
+
+        &.completed {
+            &::before {
+                content: '\2713';
+            }
+        } 
+    }
+}

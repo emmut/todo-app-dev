@@ -51,6 +51,7 @@ function retrieveTodo() {
 
 function renderTodo() {
 
+    // add object if completely empty
     if(!window.localStorage) window.localStorage.setItem('todo', JSON.stringify([{}]));
 
     let temp = retrieveTodo(); 
@@ -60,22 +61,26 @@ function renderTodo() {
         
         let title = el.title;
         let ID = el.id;
+        let completed = el.completed
         // let complete = el.complete
 
         // runs the add todo-function
-        addToDo(title, ID);
+        addToDo(title, ID, completed);
         
     });
 }
 
 
 // add todo to list
-function addToDo(data, ID) {
+function addToDo(data, ID, completed) {
     
     // create div element
     const box = document.createElement('div');
     box.setAttribute('class', 'box');
     box.addEventListener('click', doComplete);
+    if(completed) {
+        box.classList.toggle('completed');
+    }
     
     // create li element and adds unique id 
     const listItem = document.createElement('li');
@@ -136,7 +141,7 @@ function saveToLocal(data, done = false ) {
         temp = [];
     }
 
-    let ID = temp.length + 1;
+    let ID = temp.length;
     // TODO: lägg till due och skapelsedatum
     // add data to temporary object
     temp.push({
@@ -165,46 +170,24 @@ function doComplete(e) {
     
     // get localstorage array and filter out the correct listitem
     let temp = retrieveTodo();
-    console.log(temp);
     
-    let updatedTodo = temp.forEach((el, index, array) => {
-        if (index !== thisID) return;
-
-        console.log(thisID);
-        console.log(el.completed);
-        el.completed = true;
-        console.log(el.completed);
-        console.log(array);
+    temp.forEach((el, index, array) => {
+        // console.log(el.completed);
+        // console.log(array[index].completed);
         
+        if (index === thisID) {
+            if(array[index].completed) {
+                array[index].completed = false;
+                console.log(array[index].completed);
+            } else {
+                array[index].completed = true;
+                console.log(array[index].completed);
+            }
+            
+        }
         
-        // if(el.id === thisID && el.completed) {
-        //     console.log('is true');
-            
-        //     el.completed = false;
-        //     return temp;
-        // } else if(el.id === thisID && !el.completed) {
-        //     console.log('is false');
-            
-        //     el.completed = true;      
-        //     return temp;
-        // }
     });
-    console.log(updatedTodo);
     
-    // window.localStorage.setItem('todo', JSON.stringify(updatedTodo));
+    window.localStorage.setItem('todo', JSON.stringify(temp));
     
-    // let thisTodo = temp.filter(el => el.id == thisID);
-    // let data = thisTodo[0].title;
-
-    // // remove old item, and set complete status
-    // if(thisTodo[0].completed) {
-    //     // removeTodo(thisID);
-    //     saveToLocal(data, false);
-    //     console.log('Saved false');
-    // } else {
-    //     removeTodo(thisID);
-    //     saveToLocal(data, true);
-    //     // console.log('Saved true');
-    // }
-
 }

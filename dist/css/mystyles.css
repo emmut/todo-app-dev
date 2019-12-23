@@ -4732,4 +4732,7 @@ a.navbar-item,
     .section.is-large {
       padding: 18rem 1.5rem; } }
 
+#todoUl .box.completed::before {
+  content: '\2713'; }
+
 /*# sourceMappingURL=mystyles.css.map*/
