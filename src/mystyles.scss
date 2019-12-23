@@ -35,12 +35,55 @@ $input-shadow: none;
 @import "../node_modules/bulma/sass/layout/hero.sass";
 @import "../node_modules/bulma/sass/layout/section.sass";
 
+body {
+    padding: 1rem 2rem;
+}
+
+#inputTodoForm {
+    display: flex;
+    .control {
+        flex: 1;
+    }
+
+    input[type="text"] {
+        border-radius: 4px 0 0 4px ;
+    }
+    .button {
+        margin-left: -1rem;
+    }
+}
+
+#deleteAll {
+    margin: 1rem 0 1rem auto;
+    display: block;
+}
+
 #todoUl {
     .box {
+        position: relative;
+        display: flex;
+        flex-flow: row nowrap;
+        padding: 1.25rem 3rem 1.25rem;
+        li {
+            flex: 1;
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: space-between;
 
+        }
+        
+        .delete {
+            position: absolute;
+            right: 1.2rem;
+            margin-top: 0.2rem;
+        }
         &.completed {
+            text-decoration: line-through;
+            background: $success;
             &::before {
                 content: '\2713';
+                position: absolute;
+                left: 1.2rem;
             }
         } 
     }

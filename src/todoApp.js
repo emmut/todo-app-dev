@@ -62,7 +62,6 @@ function renderTodo() {
         let title = el.title;
         let ID = el.id;
         let completed = el.completed
-        // let complete = el.complete
 
         // runs the add todo-function
         addToDo(title, ID, completed);
@@ -89,7 +88,7 @@ function addToDo(data, ID, completed) {
     
     // create deleteBtn
     const deleteBtnLink = document.createElement('a');
-    deleteBtnLink.setAttribute('class', 'delete');
+    deleteBtnLink.setAttribute('class', 'delete is-small');
     
     // adds delete function to new element
     deleteBtnLink.addEventListener('click', (e) => {
@@ -104,7 +103,7 @@ function addToDo(data, ID, completed) {
     });
     
     // add list item to ul and display the data to the screen
-    todo.appendChild(box).appendChild(listItem);
+    todo.insertBefore(box, todo.childNodes[0]).appendChild(listItem);
     listItem.innerHTML = data; 
     listItem.appendChild(deleteBtnLink);
 
@@ -144,7 +143,7 @@ function saveToLocal(data, done = false ) {
     let ID = temp.length;
     // TODO: lägg till due och skapelsedatum
     // add data to temporary object
-    temp.push({
+    temp.unshift({
         id: ID,
         title: data,
         due: null,
@@ -178,10 +177,10 @@ function doComplete(e) {
         if (index === thisID) {
             if(array[index].completed) {
                 array[index].completed = false;
-                console.log(array[index].completed);
+                // console.log(array[index].completed);
             } else {
                 array[index].completed = true;
-                console.log(array[index].completed);
+                // console.log(array[index].completed);
             }
             
         }

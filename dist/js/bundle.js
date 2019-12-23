@@ -181,7 +181,6 @@ function renderTodo() {
         let title = el.title;
         let ID = el.id;
         let completed = el.completed
-        // let complete = el.complete
 
         // runs the add todo-function
         addToDo(title, ID, completed);
@@ -208,7 +207,7 @@ function addToDo(data, ID, completed) {
     
     // create deleteBtn
     const deleteBtnLink = document.createElement('a');
-    deleteBtnLink.setAttribute('class', 'delete');
+    deleteBtnLink.setAttribute('class', 'delete is-small');
     
     // adds delete function to new element
     deleteBtnLink.addEventListener('click', (e) => {
@@ -223,7 +222,7 @@ function addToDo(data, ID, completed) {
     });
     
     // add list item to ul and display the data to the screen
-    todo.appendChild(box).appendChild(listItem);
+    todo.insertBefore(box, todo.childNodes[0]).appendChild(listItem);
     listItem.innerHTML = data; 
     listItem.appendChild(deleteBtnLink);
 
@@ -263,7 +262,7 @@ function saveToLocal(data, done = false ) {
     let ID = temp.length;
     // TODO: lägg till due och skapelsedatum
     // add data to temporary object
-    temp.push({
+    temp.unshift({
         id: ID,
         title: data,
         due: null,
@@ -297,61 +296,18 @@ function doComplete(e) {
         if (index === thisID) {
             if(array[index].completed) {
                 array[index].completed = false;
-                console.log(array[index].completed);
+                // console.log(array[index].completed);
             } else {
                 array[index].completed = true;
-                console.log(array[index].completed);
+                // console.log(array[index].completed);
             }
             
         }
         
-        // if (index === thisID) {
-        //     if(el.completed) {
-        //         this.completed = false;
-        //         console.log(el.completed);
-        //     } else {
-        //         el.completed = true;
-        //         console.log(el.completed);
-        //     }
-            
-        //     // console.log(thisID);
-        //     // console.log(el.completed);
-        //     // el.completed = true;
-        //     // console.log(el.completed);
-        // }
-
-        
-        
-        // if(el.id === thisID && el.completed) {
-        //     console.log('is true');
-            
-        //     el.completed = false;
-        //     return temp;
-        // } else if(el.id === thisID && !el.completed) {
-        //     console.log('is false');
-            
-        //     el.completed = true;      
-        //     return temp;
-        // }
     });
-    console.log(temp);
     
     window.localStorage.setItem('todo', JSON.stringify(temp));
     
-    // let thisTodo = temp.filter(el => el.id == thisID);
-    // let data = thisTodo[0].title;
-
-    // // remove old item, and set complete status
-    // if(thisTodo[0].completed) {
-    //     // removeTodo(thisID);
-    //     saveToLocal(data, false);
-    //     console.log('Saved false');
-    // } else {
-    //     removeTodo(thisID);
-    //     saveToLocal(data, true);
-    //     // console.log('Saved true');
-    // }
-
 }
 
 /***/ })
