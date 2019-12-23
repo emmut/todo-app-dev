@@ -16,11 +16,19 @@ module.exports = {
       use: ExtractTextPlugin.extract({
         fallback: 'style-loader',
         use: [
-          'css-loader',
-          'sass-loader'
+          'css-loader?sourceMap',
+          'sass-loader?sourceMap'
         ]
       })
-    }]
+    },
+    {
+      test: /\.css$/,
+      loaders: [
+        "style-loader",
+        "css-loader?sourceMap"
+      ]
+    },
+  ]
   },
   mode: 'development',
   plugins: [
