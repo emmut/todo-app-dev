@@ -4742,7 +4742,7 @@ body {
   #inputTodoForm input[type="text"] {
     border-radius: 4px 0 0 4px; }
   #inputTodoForm .button {
-    margin-left: -1rem; }
+    border-radius: 0 4px 4px 0; }
 
 #deleteAll {
   margin: 1rem 0 1rem auto;
