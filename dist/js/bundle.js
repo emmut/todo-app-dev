@@ -148,7 +148,10 @@ form.addEventListener('submit', (e) => {
 });
 
 deleteAllBtn.addEventListener('click', () =>  {
+    // clear all todos from storeage
     window.localStorage.clear();
+    // sets up new empty array 
+    window.localStorage.setItem('todo', JSON.stringify([{}]));
     
     todoItems.forEach((el) => {
         el.style.display = 'none';
@@ -169,9 +172,12 @@ function retrieveTodo() {
 }
 
 function renderTodo() {
-
+    let testArr = window.localStorage.getItem('todo');
     // add object if completely empty
-    if(!window.localStorage) window.localStorage.setItem('todo', JSON.stringify([{}]));
+    if( testArr == null || testArr == undefined ) {
+        // sets up the array if no todos exists
+        window.localStorage.setItem('todo', JSON.stringify([{}]));
+    }
 
     let temp = retrieveTodo(); 
 
@@ -181,6 +187,12 @@ function renderTodo() {
         let title = el.title;
         let ID = el.id;
         let completed = el.completed
+        
+        if(
+            title       == undefined ||
+            ID          == undefined ||
+            completed   == undefined 
+            ) return;
 
         // runs the add todo-function
         addToDo(title, ID, completed);
