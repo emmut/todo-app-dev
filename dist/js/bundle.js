@@ -148,6 +148,9 @@ form.addEventListener('submit', (e) => {
 });
 
 deleteAllBtn.addEventListener('click', () =>  {
+    let accept = confirm('Are you sure?');
+
+    if (!accept) return;
     // clear all todos from storeage
     window.localStorage.clear();
     // sets up new empty array 
