@@ -35,7 +35,7 @@ deleteAllBtn.addEventListener('click', () =>  {
     // clear all todos from storeage
     window.localStorage.clear();
     // sets up new empty array 
-    window.localStorage.setItem('todo', JSON.stringify([{}]));
+    window.localStorage.setItem('todo', JSON.stringify([]));
     
     todoItems.forEach((el) => {
         el.style.display = 'none';
@@ -158,7 +158,7 @@ function saveToLocal(data, done = false ) {
     let ID = temp.length;
     // TODO: lägg till due och skapelsedatum
     // add data to temporary object
-    temp.unshift({
+    temp.push({
         id: ID,
         title: data,
         due: null,
