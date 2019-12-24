@@ -73,9 +73,9 @@ body {
         }
         
         .delete {
-            position: absolute;
             right: 1.2rem;
             margin-top: 0.2rem;
+            margin-right: -2rem;
         }
         &.completed {
             text-decoration: line-through;
