@@ -49,7 +49,6 @@ todoItems.forEach((el) => {
 
 function retrieveTodo() {
     let temp = window.localStorage.getItem('todo');
-
     if(!temp) return;
     
     return JSON.parse(temp);
@@ -64,6 +63,7 @@ function renderTodo() {
     }
 
     let temp = retrieveTodo(); 
+    if(!temp) return;
 
     // render todo
     temp.forEach((el) => {
@@ -85,7 +85,7 @@ function renderTodo() {
 }
 
 
-// add todo to list
+// display todo to the screen
 function addToDo(data, ID, completed) {
     
     // create div element
@@ -96,9 +96,22 @@ function addToDo(data, ID, completed) {
         box.classList.toggle('completed');
     }
     
-    // create li element and adds unique id 
+    // create li and span element and adds unique id 
     const listItem = document.createElement('li');
     listItem.setAttribute('data-id', ID);
+    const span = document.createElement('span');
+    span.setAttribute('class', 'lt');
+    const fa = document.createElement('i');
+    fa.setAttribute('class', 'fas fa-check');
+
+    let temp = retrieveTodo();
+    if(!temp) return;
+
+    // create p element with date
+    const textElement = document.createElement('p');
+    textElement.setAttribute('class', 'date')
+    const dateText = document.createTextNode('Created: ' + temp[ID].created);
+    textElement.appendChild(dateText);
 
     
     // create deleteBtn
@@ -111,7 +124,7 @@ function addToDo(data, ID, completed) {
         const listItem = e.target.parentElement;
         // .box to remove
         const target = listItem.parentElement;
-        // listitem data
+        // listitem ID
         const ID = Number(listItem.dataset.id);
         
         removeTodo(ID, target);
@@ -119,8 +132,11 @@ function addToDo(data, ID, completed) {
     
     // add list item to ul and display the data to the screen
     todo.insertBefore(box, todo.childNodes[0]).appendChild(listItem);
-    listItem.innerHTML = data; 
+    listItem.appendChild(span);
+    listItem.insertBefore(fa, span) 
+    span.innerHTML = data; 
     listItem.appendChild(deleteBtnLink);
+    listItem.appendChild(textElement);
 
 }
 function removeTodo(ID, target) {
@@ -146,7 +162,7 @@ function saveToLocal(data, done = false ) {
     let mm = String(today.getMonth() + 1).padStart(2, '0');
     let yyyy = today.getFullYear();
     // format date
-    today = dd + '/' + mm + '/' + yyyy;
+    today = yyyy + '/' + mm + '/' + dd;
 
     // get todo array from storage
     let temp = retrieveTodo();
@@ -162,8 +178,7 @@ function saveToLocal(data, done = false ) {
         id: ID,
         title: data,
         due: null,
-        modified: today,
-        created: null,
+        created: today,
         completed: done,
     });
     
@@ -186,20 +201,13 @@ function doComplete(e) {
     let temp = retrieveTodo();
     
     temp.forEach((el, index, array) => {
-        // console.log(el.completed);
-        // console.log(array[index].completed);
-        
         if (index === thisID) {
             if(array[index].completed) {
                 array[index].completed = false;
-                // console.log(array[index].completed);
             } else {
                 array[index].completed = true;
-                // console.log(array[index].completed);
             }
-            
         }
-        
     });
     
     window.localStorage.setItem('todo', JSON.stringify(temp));
