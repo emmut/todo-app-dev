@@ -101,8 +101,11 @@ function addToDo(data, ID, completed) {
     listItem.setAttribute('data-id', ID);
     const span = document.createElement('span');
     span.setAttribute('class', 'lt');
-    const fa = document.createElement('i');
-    fa.setAttribute('class', 'fas fa-check');
+
+    // adds font awesome icon svg file
+    const fa = document.createElement('img');
+    fa.setAttribute('src', 'img/check-solid.svg');
+    fa.classList.add('fas', 'fas-check');
 
     let temp = retrieveTodo();
     if(!temp) return;
