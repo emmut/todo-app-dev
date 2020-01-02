@@ -30,7 +30,7 @@ module.exports = {
       port: 3000,
       server: { baseDir: ["dist"] },
       files: ['./dist/*.html'],
-      browser: 'firefox',
+      browser: 'firefox developer edition',
     }),
     new ExtractTextPlugin('css/mystyles.css'),
   ]
